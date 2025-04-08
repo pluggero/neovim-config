@@ -106,6 +106,7 @@ return {
 			},
 			-- Additional arguments
 			args = {
+				"--stdio",
 				"--logLevel=Information",
 				"--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
 				"--razorSourceGenerator=" .. vim.fs.joinpath(
@@ -126,7 +127,7 @@ return {
 					"Microsoft.NET.Sdk.Razor.DesignTime.targets"
 				),
 			},
-			filewatching = true,
+			filewatching = "auto",
 			choose_target = nil,
 			ignore_target = nil,
 			broad_search = true,

@@ -4,6 +4,7 @@ return {
 	dependencies = { "nvim-lua/plenary.nvim" },
 	config = function()
 		local harpoon = require("harpoon")
+		local list = harpoon:list()
 		local keymap = vim.keymap
 
 		harpoon.setup({
@@ -17,21 +18,23 @@ return {
 		})
 
 		-- Key mappings for Harpoon
-		keymap.set(
-			"n",
-			"<leader>m",
-			"<cmd>lua require('harpoon.mark').add_file()<CR>",
-			{ desc = "Add file to Harpoon" }
-		) -- Add file to Harpoon
-		keymap.set(
-			"n",
-			"<C-e>",
-			"<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>",
-			{ desc = "Toggle Harpoon menu" }
-		) -- Toggle Harpoon menu
-		keymap.set("n", "1", "<cmd>lua require('harpoon.ui').nav_file(1)<CR>", { desc = "Go to Harpoon file 1" }) -- Navigate to file 1
-		keymap.set("n", "2", "<cmd>lua require('harpoon.ui').nav_file(2)<CR>", { desc = "Go to Harpoon file 2" }) -- Navigate to file 2
-		keymap.set("n", "3", "<cmd>lua require('harpoon.ui').nav_file(3)<CR>", { desc = "Go to Harpoon file 3" }) -- Navigate to file 3
-		keymap.set("n", "4", "<cmd>lua require('harpoon.ui').nav_file(4)<CR>", { desc = "Go to Harpoon file 4" }) -- Navigate to file 4
+		keymap.set("n", "<leader>hx", function()
+			list:add()
+		end, { desc = "Add file to Harpoon" }) -- Add file to Harpoon
+		keymap.set("n", "<leader>hm", function()
+			harpoon.ui:toggle_quick_menu(list)
+		end, { desc = "Toggle Harpoon menu" }) -- Toggle Harpoon menu
+		keymap.set("n", "1", function()
+			list:select(1)
+		end, { desc = "Go to Harpoon file 1" })
+		keymap.set("n", "2", function()
+			list:select(2)
+		end, { desc = "Go to Harpoon file 2" })
+		keymap.set("n", "3", function()
+			list:select(3)
+		end, { desc = "Go to Harpoon file 3" })
+		keymap.set("n", "4", function()
+			list:select(4)
+		end, { desc = "Go to Harpoon file 4" })
 	end,
 }
