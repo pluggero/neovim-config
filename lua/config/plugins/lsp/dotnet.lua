@@ -64,6 +64,42 @@ return {
 		roslyn.setup({
 			-- The `config` table passes standard LSP client config to `vim.lsp.start`
 			config = {
+				cmd = {
+					-- We need to make sure that the exe path lead to the `Microsoft.CodeAnalysis.LanguageServer.dll`.
+					-- We can check if it's either stored under `~/.local/share/nvimmason/packages/roslyn/libexec` or `~/.local/share/nvim/roslyn`
+					-- And obviously we need to make sure that the dotnet sdk is installed.
+					-- If we installed via Mason custom registry (which we do in the mason.lua by adding the `crashdummyy/mason-registry`), these are the default paths:
+					"dotnet",
+					vim.fs.joinpath(
+						vim.fn.stdpath("data"),
+						"mason",
+						"packages",
+						"roslyn",
+						"libexec",
+						"Microsoft.CodeAnalysis.LanguageServer.dll"
+					),
+					-- Additional arguments
+					"--stdio",
+					"--logLevel=Information",
+					"--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
+					"--razorSourceGenerator=" .. vim.fs.joinpath(
+						vim.fn.stdpath("data"),
+						"mason",
+						"packages",
+						"roslyn",
+						"libexec",
+						"Microsoft.CodeAnalysis.Razor.Compiler.dll"
+					),
+					"--razorDesignTimePath=" .. vim.fs.joinpath(
+						vim.fn.stdpath("data"),
+						"mason",
+						"packages",
+						"rzls",
+						"libexec",
+						"Targets",
+						"Microsoft.NET.Sdk.Razor.DesignTime.targets"
+					),
+				},
 				on_attach = lsp_utils.on_attach,
 				capabilities = capabilities,
 				-- Add rzls handlers to make the packages work with each other
@@ -88,44 +124,6 @@ return {
 						dotnet_enable_references_code_lens = true,
 					},
 				},
-			},
-			-- We need to make sure that the exe path lead to the `Microsoft.CodeAnalysis.LanguageServer.dll`.
-			-- We can check if it's either stored under `~/.local/share/nvimmason/packages/roslyn/libexec` or `~/.local/share/nvim/roslyn`
-			-- And obviously we need to make sure that the dotnet sdk is installed.
-			-- If we installed via Mason custom registry (which we do in the mason.lua by adding the `crashdummyy/mason-registry`), these are the default paths:
-			exe = {
-				"dotnet",
-				vim.fs.joinpath(
-					vim.fn.stdpath("data"),
-					"mason",
-					"packages",
-					"roslyn",
-					"libexec",
-					"Microsoft.CodeAnalysis.LanguageServer.dll"
-				),
-			},
-			-- Additional arguments
-			args = {
-				"--stdio",
-				"--logLevel=Information",
-				"--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
-				"--razorSourceGenerator=" .. vim.fs.joinpath(
-					vim.fn.stdpath("data") --[[@as string]],
-					"mason",
-					"packages",
-					"roslyn",
-					"libexec",
-					"Microsoft.CodeAnalysis.Razor.Compiler.dll"
-				),
-				"--razorDesignTimePath=" .. vim.fs.joinpath(
-					vim.fn.stdpath("data") --[[@as string]],
-					"mason",
-					"packages",
-					"rzls",
-					"libexec",
-					"Targets",
-					"Microsoft.NET.Sdk.Razor.DesignTime.targets"
-				),
 			},
 			filewatching = "auto",
 			choose_target = nil,
