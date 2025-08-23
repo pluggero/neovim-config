@@ -67,6 +67,7 @@ return {
 				"debugpy", -- python debugger
 				"roslyn",
 				"rzls",
+				"netcoredbg", -- C# debugger
 				"ansible-lint",
 				"tflint", -- terraform linter
 			},

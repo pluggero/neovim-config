@@ -43,35 +43,45 @@ return {
 			keymap.set("n", "<F11>", dap.step_into, { desc = "Step Into Function" })
 			keymap.set("n", "<F12>", dap.step_out, { desc = "Step Out Function" })
 
+			local dap_utils = require("dap.utils")
+
 			-- Add netcoredbg configuration for C#
-			dap.adapters.coreclr = {
+			local mason_path = vim.fn.stdpath("data") .. "/mason/packages/netcoredbg/netcoredbg"
+
+			local netcoredbg_adapter = {
 				type = "executable",
-				command = "/usr/bin/netcoredbg",
+				command = mason_path,
 				args = { "--interpreter=vscode" },
 			}
+
+			dap.adapters.netcoredbg = netcoredbg_adapter -- needed for normal debugging
+			dap.adapters.coreclr = netcoredbg_adapter -- needed for unit test debugging
+
+			local dotnet = require("config.utils.nvim-dap-dotnet")
+
 			dap.configurations.cs = {
 				{
 					type = "coreclr",
 					name = "Launch",
 					request = "launch",
 					program = function()
-						return vim.fn.input("Path to dll: ", vim.fn.getcwd(), "file")
+						return dotnet.build_dll_path()
 					end,
-					env = {
-						ASPNETCORE_ENVIRONMENT = "Development", -- Start in development mode
-					},
 				},
 				{
 					type = "coreclr",
 					name = "Attach",
 					request = "attach",
-					processId = require("dap.utils").pick_process,
-					program = function()
-						return vim.fn.input("Path to dll: ", vim.fn.getcwd(), "file")
+					processId = dap_utils.pick_process,
+				},
+				{
+					type = "coreclr",
+					name = "Attach (Smart)",
+					request = "attach",
+					processId = function()
+						local current_working_dir = vim.fn.getcwd()
+						return dotnet.smart_pick_process(dap_utils, current_working_dir) or dap.ABORT
 					end,
-					env = {
-						ASPNETCORE_ENVIRONMENT = "Development", -- Start in development mode
-					},
 				},
 			}
 		end,
