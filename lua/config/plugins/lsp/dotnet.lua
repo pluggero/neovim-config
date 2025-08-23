@@ -62,67 +62,65 @@ return {
 		})
 
 		roslyn.setup({
-			-- The `config` table passes standard LSP client config to `vim.lsp.start`
-			config = {
-				cmd = {
-					-- We need to make sure that the exe path lead to the `Microsoft.CodeAnalysis.LanguageServer.dll`.
-					-- We can check if it's either stored under `~/.local/share/nvimmason/packages/roslyn/libexec` or `~/.local/share/nvim/roslyn`
-					-- And obviously we need to make sure that the dotnet sdk is installed.
-					-- If we installed via Mason custom registry (which we do in the mason.lua by adding the `crashdummyy/mason-registry`), these are the default paths:
-					"dotnet",
-					vim.fs.joinpath(
-						vim.fn.stdpath("data"),
-						"mason",
-						"packages",
-						"roslyn",
-						"libexec",
-						"Microsoft.CodeAnalysis.LanguageServer.dll"
-					),
-					-- Additional arguments
-					"--stdio",
-					"--logLevel=Information",
-					"--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
-					"--razorSourceGenerator=" .. vim.fs.joinpath(
-						vim.fn.stdpath("data"),
-						"mason",
-						"packages",
-						"roslyn",
-						"libexec",
-						"Microsoft.CodeAnalysis.Razor.Compiler.dll"
-					),
-					"--razorDesignTimePath=" .. vim.fs.joinpath(
-						vim.fn.stdpath("data"),
-						"mason",
-						"packages",
-						"rzls",
-						"libexec",
-						"Targets",
-						"Microsoft.NET.Sdk.Razor.DesignTime.targets"
-					),
+			-- LSP client configuration
+			cmd = {
+				-- We need to make sure that the exe path lead to the `Microsoft.CodeAnalysis.LanguageServer.dll`.
+				-- We can check if it's either stored under `~/.local/share/nvimmason/packages/roslyn/libexec` or `~/.local/share/nvim/roslyn`
+				-- And obviously we need to make sure that the dotnet sdk is installed.
+				-- If we installed via Mason custom registry (which we do in the mason.lua by adding the `crashdummyy/mason-registry`), these are the default paths:
+				"dotnet",
+				vim.fs.joinpath(
+					vim.fn.stdpath("data"),
+					"mason",
+					"packages",
+					"roslyn",
+					"libexec",
+					"Microsoft.CodeAnalysis.LanguageServer.dll"
+				),
+				-- Additional arguments
+				"--stdio",
+				"--logLevel=Information",
+				"--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
+				"--razorSourceGenerator=" .. vim.fs.joinpath(
+					vim.fn.stdpath("data"),
+					"mason",
+					"packages",
+					"roslyn",
+					"libexec",
+					"Microsoft.CodeAnalysis.Razor.Compiler.dll"
+				),
+				"--razorDesignTimePath=" .. vim.fs.joinpath(
+					vim.fn.stdpath("data"),
+					"mason",
+					"packages",
+					"rzls",
+					"libexec",
+					"Targets",
+					"Microsoft.NET.Sdk.Razor.DesignTime.targets"
+				),
+			},
+			on_attach = lsp_utils.on_attach,
+			capabilities = capabilities,
+			-- Add rzls handlers to make the packages work with each other
+			handlers = require("rzls.roslyn_handlers"),
+			-- `settings` for Roslyn-specific functionality:
+			settings = {
+				["csharp|inlay_hints"] = {
+					csharp_enable_inlay_hints_for_implicit_object_creation = true,
+					csharp_enable_inlay_hints_for_implicit_variable_types = true,
+					csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+					csharp_enable_inlay_hints_for_types = true,
+					dotnet_enable_inlay_hints_for_indexer_parameters = true,
+					dotnet_enable_inlay_hints_for_literal_parameters = true,
+					dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+					dotnet_enable_inlay_hints_for_other_parameters = true,
+					dotnet_enable_inlay_hints_for_parameters = true,
+					dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+					dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+					dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
 				},
-				on_attach = lsp_utils.on_attach,
-				capabilities = capabilities,
-				-- Add rzls handlers to make the packages work with each other
-				handlers = require("rzls.roslyn_handlers"),
-				-- `settings` for Roslyn-specific functionality:
-				settings = {
-					["csharp|inlay_hints"] = {
-						csharp_enable_inlay_hints_for_implicit_object_creation = true,
-						csharp_enable_inlay_hints_for_implicit_variable_types = true,
-						csharp_enable_inlay_hints_for_lambda_parameter_types = true,
-						csharp_enable_inlay_hints_for_types = true,
-						dotnet_enable_inlay_hints_for_indexer_parameters = true,
-						dotnet_enable_inlay_hints_for_literal_parameters = true,
-						dotnet_enable_inlay_hints_for_object_creation_parameters = true,
-						dotnet_enable_inlay_hints_for_other_parameters = true,
-						dotnet_enable_inlay_hints_for_parameters = true,
-						dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
-						dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
-						dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
-					},
-					["csharp|code_lens"] = {
-						dotnet_enable_references_code_lens = true,
-					},
+				["csharp|code_lens"] = {
+					dotnet_enable_references_code_lens = true,
 				},
 			},
 			filewatching = "auto",
