@@ -29,19 +29,50 @@ function M.on_attach(client, bufnr)
 	buf_map("n", "K", vim.lsp.buf.hover, "LSP: [K]eyword hover")
 	buf_map("n", "<leader>rs", ":LspRestart<CR>", "LSP: [R]e[S]tart")
 
-	-- Highlight references if the server supports it
-	if client.server_capabilities.documentHighlightProvider then
-		local highlight_augroup = vim.api.nvim_create_augroup("lsp_highlight", { clear = false })
-		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-			buffer = bufnr,
-			group = highlight_augroup,
-			callback = vim.lsp.buf.document_highlight,
-		})
-		vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-			buffer = bufnr,
-			group = highlight_augroup,
-			callback = vim.lsp.buf.clear_references,
-		})
+	-- Highlight references if supported (robust to detach/restart)
+	do
+		local supports_doc_hl = (client.supports_method and client.supports_method("textDocument/documentHighlight"))
+			or (client.server_capabilities and client.server_capabilities.documentHighlightProvider)
+
+		if supports_doc_hl then
+			local group = vim.api.nvim_create_augroup("lsp_document_highlight_" .. bufnr, { clear = true })
+
+			-- Re-check support at call time to avoid "method not supported" messages
+			local function safe_document_highlight()
+				local has = #vim.lsp.get_clients({ bufnr = bufnr, method = "textDocument/documentHighlight" }) > 0
+				if has then
+					pcall(vim.lsp.buf.document_highlight)
+				end
+			end
+
+			vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+				buffer = bufnr,
+				group = group,
+				callback = safe_document_highlight,
+				desc = "LSP: document highlight (safe)",
+			})
+
+			vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufLeave" }, {
+				buffer = bufnr,
+				group = group,
+				callback = function()
+					pcall(vim.lsp.buf.clear_references)
+				end,
+				desc = "LSP: clear document highlights",
+			})
+
+			-- Clean up when the client that added these autocmds detaches
+			vim.api.nvim_create_autocmd("LspDetach", {
+				buffer = bufnr,
+				group = group,
+				callback = function(args)
+					if args.data and args.data.client_id == client.id then
+						pcall(vim.api.nvim_del_augroup_by_id, group)
+					end
+				end,
+				desc = "LSP: remove document highlight autocmds on detach",
+			})
+		end
 	end
 
 	-- Toggle inlay hints, if supported
