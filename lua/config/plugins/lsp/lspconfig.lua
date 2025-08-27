@@ -25,6 +25,7 @@ return {
 		-- │ Diagnostic Signs                                        │
 		-- ╰──────────────────────────────────────────────────────────╯
 		vim.diagnostic.config({
+			virtual_text = false, -- Disable to use tiny-inline-diagnostic instead
 			signs = {
 				text = {
 					[vim.diagnostic.severity.ERROR] = " ",
