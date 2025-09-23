@@ -53,6 +53,7 @@ return {
 				"ansiblels",
 				"bashls",
 				"terraformls",
+				"lemminx",
 			},
 		})
 
@@ -70,6 +71,8 @@ return {
 				"netcoredbg", -- C# debugger
 				"ansible-lint",
 				"tflint", -- terraform linter
+				"jq", -- JSON processor
+				"xmllint", -- XML formatter
 			},
 		})
 	end,

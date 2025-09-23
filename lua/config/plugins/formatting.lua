@@ -23,7 +23,7 @@ return {
 				svelte = { "prettier" },
 				css = { "prettier" },
 				html = { "prettier" },
-				json = { "prettier" },
+				json = { "jq" },
 				yaml = { "prettier" },
 				markdown = { "prettier" },
 				graphql = { "prettier" },
@@ -31,6 +31,7 @@ return {
 				lua = { "stylua" },
 				python = { "isort", "black" },
 				cs = { "csharpier" },
+				xml = { "xmllint" },
 			},
 			-- Enable format on save initially
 			format_on_save = {
@@ -72,6 +73,7 @@ return {
 				"liquid",
 				"lua",
 				"python",
+				"xml",
 			}
 
 			-- Always ask the user to pick a filetype from the list
