@@ -72,7 +72,7 @@ return {
 				"ansible-lint",
 				"tflint", -- terraform linter
 				"jq", -- JSON processor
-				"xmllint", -- XML formatter
+				"xmlformatter", -- XML formatter
 			},
 		})
 	end,
