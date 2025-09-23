@@ -31,7 +31,7 @@ return {
 				lua = { "stylua" },
 				python = { "isort", "black" },
 				cs = { "csharpier" },
-				xml = { "xmllint" },
+				xml = { "xmlformatter" },
 			},
 			-- Enable format on save initially
 			format_on_save = {
