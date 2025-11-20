@@ -23,7 +23,7 @@ return {
 		})
 
 		-- Define vimgrep argument sets
-		local vimgrep_args_standard = {
+		local vimgrep_args_restricted = {
 			"rg",
 			"--color=never",
 			"--no-heading",
@@ -33,10 +33,23 @@ return {
 			"--smart-case",
 		}
 
-		local vimgrep_args_all = vim.list_extend(vim.deepcopy(vimgrep_args_standard), {
+		local vimgrep_args_all = vim.list_extend(vim.deepcopy(vimgrep_args_restricted), {
 			"--no-ignore", -- Include files ignored by .gitignore
 			"--hidden", -- Search hidden files
 			"--text", -- Force binary files to be treated as text
+		})
+
+		-- Define find_command sets
+		local find_command_restricted = {
+			"rg",
+			"--files",
+			"--color=never",
+			"--smart-case",
+		}
+
+		local find_command_all = vim.list_extend(vim.deepcopy(find_command_restricted), {
+			"--no-ignore", -- Include files ignored by .gitignore
+			"--hidden", -- Search hidden files
 		})
 
 		telescope.setup({
@@ -53,11 +66,16 @@ return {
 					},
 				},
 			},
+			pickers = {
+				find_files = {
+					find_command = find_command_all, -- Default: find all files
+				},
+			},
 		})
 
 		telescope.load_extension("fzf")
 
-		-- Toggle function for vimgrep arguments
+		-- Toggle function for vimgrep arguments and find command
 		local function toggle_vimgrep_args()
 			local current = require("telescope.config").values.vimgrep_arguments
 			local is_all = vim.deep_equal(current, vimgrep_args_all)
@@ -65,7 +83,12 @@ return {
 			if is_all then
 				telescope.setup({
 					defaults = {
-						vimgrep_arguments = vimgrep_args_standard,
+						vimgrep_arguments = vimgrep_args_restricted,
+					},
+					pickers = {
+						find_files = {
+							find_command = find_command_restricted,
+						},
 					},
 				})
 				vim.notify("Telescope: Search Mode Restricted", vim.log.levels.INFO)
@@ -73,6 +96,11 @@ return {
 				telescope.setup({
 					defaults = {
 						vimgrep_arguments = vimgrep_args_all,
+					},
+					pickers = {
+						find_files = {
+							find_command = find_command_all,
+						},
 					},
 				})
 				vim.notify("Telescope: Search Mode Extended", vim.log.levels.INFO)
