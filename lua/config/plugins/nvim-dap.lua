@@ -36,9 +36,9 @@ return {
 			-- Keymaps for dap functionality
 			local keymap = vim.keymap
 			keymap.set("n", "<Leader>dt", dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })
-			keymap.set("n", "<Leader>dc", dap.continue, { desc = "Continue Debugging" })
+			keymap.set("n", "<Leader>dc", dap.continue, { desc = "Connect Debugging Session" })
 			keymap.set("n", "<Leader>dd", dap.disconnect, { desc = "Disconnect Debugging Session" })
-			keymap.set("n", "<F5>", dap.continue, { silent = true, noremap = true, desc = "Continue Debugging" })
+			keymap.set("n", "<F5>", dap.continue, { silent = true, noremap = true, desc = "Connect Debugging Session" })
 			keymap.set("n", "<F10>", dap.step_over, { desc = "Step Over Function" })
 			keymap.set("n", "<F11>", dap.step_into, { desc = "Step Into Function" })
 			keymap.set("n", "<F12>", dap.step_out, { desc = "Step Out Function" })
