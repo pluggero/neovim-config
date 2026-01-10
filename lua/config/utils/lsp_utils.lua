@@ -16,10 +16,10 @@ function M.on_attach(client, bufnr)
 	end
 
 	-- Keybindings for LSP features
-	buf_map("n", "gr", "<cmd>Telescope lsp_references<CR>", "LSP: [G]oto [R]eferences")
-	buf_map("n", "gD", vim.lsp.buf.declaration, "LSP: [G]oto [D]eclaration")
-	buf_map("n", "gd", "<cmd>Telescope lsp_definitions<CR>", "LSP: [G]oto [D]efinition")
-	buf_map("n", "gi", "<cmd>Telescope lsp_implementations<CR>", "LSP: [G]oto [I]mplementations")
+	buf_map("n", "<leader>jr", "<cmd>Telescope lsp_references<CR>", "LSP: [J]ump to [R]eferences")
+	buf_map("n", "<leader>jD", vim.lsp.buf.declaration, "LSP: [J]ump to [D]eclaration")
+	buf_map("n", "<leader>jd", "<cmd>Telescope lsp_definitions<CR>", "LSP: [J]ump to [D]efinition")
+	buf_map("n", "<leader>ji", "<cmd>Telescope lsp_implementations<CR>", "LSP: [J]ump to [I]mplementations")
 	buf_map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "LSP: [C]ode [A]ction")
 	buf_map("n", "<leader>rn", vim.lsp.buf.rename, "LSP: [R]e[n]ame")
 	buf_map("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", "LSP: [D]iagnostics buffer")
@@ -31,7 +31,7 @@ function M.on_attach(client, bufnr)
 
 	-- Highlight references if supported (robust to detach/restart)
 	do
-		local supports_doc_hl = (client.supports_method and client.supports_method("textDocument/documentHighlight"))
+		local supports_doc_hl = (client.supports_method and client:supports_method("textDocument/documentHighlight"))
 			or (client.server_capabilities and client.server_capabilities.documentHighlightProvider)
 
 		if supports_doc_hl then

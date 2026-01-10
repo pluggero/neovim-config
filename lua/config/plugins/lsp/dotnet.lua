@@ -56,13 +56,17 @@ return {
 		local capabilities = cmp_nvim_lsp.default_capabilities()
 		local lsp_utils = require("config.utils.lsp_utils")
 
-		rzls.setup({
+		-- Configure rzls using vim.lsp.config
+		vim.lsp.config("rzls", {
 			on_attach = lsp_utils.on_attach,
 			capabilities = capabilities,
 		})
 
-		roslyn.setup({
-			-- LSP client configuration
+		-- Setup rzls plugin (plugin-specific config)
+		rzls.setup({})
+
+		-- Configure roslyn LSP client using vim.lsp.config
+		vim.lsp.config("roslyn", {
 			cmd = {
 				-- We need to make sure that the exe path lead to the `Microsoft.CodeAnalysis.LanguageServer.dll`.
 				-- We can check if it's either stored under `~/.local/share/nvimmason/packages/roslyn/libexec` or `~/.local/share/nvim/roslyn`
@@ -123,6 +127,10 @@ return {
 					dotnet_enable_references_code_lens = true,
 				},
 			},
+		})
+
+		-- Setup roslyn plugin (plugin-specific config)
+		roslyn.setup({
 			filewatching = "auto",
 			choose_target = nil,
 			ignore_target = nil,
