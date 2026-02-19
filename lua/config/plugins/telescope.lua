@@ -31,12 +31,14 @@ return {
 			"--line-number",
 			"--column",
 			"--smart-case",
+			"--hidden", -- Search hidden files and directories
 		}
 
 		local vimgrep_args_all = vim.list_extend(vim.deepcopy(vimgrep_args_restricted), {
 			"--no-ignore", -- Include files ignored by .gitignore
-			"--hidden", -- Search hidden files
 			"--text", -- Force binary files to be treated as text
+			"--glob",
+			"!.git", -- Exclude .git metadata dir for performance
 		})
 
 		-- Define find_command sets
@@ -45,11 +47,13 @@ return {
 			"--files",
 			"--color=never",
 			"--smart-case",
+			"--hidden", -- Search hidden files and directories
 		}
 
 		local find_command_all = vim.list_extend(vim.deepcopy(find_command_restricted), {
 			"--no-ignore", -- Include files ignored by .gitignore
-			"--hidden", -- Search hidden files
+			"--glob",
+			"!.git", -- Exclude .git metadata dir for performance
 		})
 
 		telescope.setup({
