@@ -1,12 +1,12 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
+	branch = "master",
 	event = { "BufReadPre", "BufNewFile" },
 	build = ":TSUpdate",
 	dependencies = {
 		"windwp/nvim-ts-autotag",
 	},
 	config = function()
-		-- import nvim-treesitter plugin
 		local treesitter = require("nvim-treesitter.configs")
 
 		-- configure treesitter
@@ -15,22 +15,14 @@ return {
 			highlight = {
 				enable = true,
 				disable = function(_, bufnr)
-					local buf_name = vim.api.nvim_buf_get_name(bufnr)
-					local file_size = vim.api.nvim_call_function("getfsize", { buf_name })
+					local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
 					local file_type = vim.api.nvim_buf_get_option(bufnr, "filetype")
 
-					-- Disable for large files (size > 256 KB)
-					if file_size > 256 * 1024 then
-						vim.notify(
-							"Treesitter disabled due to large file size (" .. file_size .. " bytes).",
-							vim.log.levels.WARN
-						)
+					if ok and stats and stats.size > 256 * 1024 then
 						return true
 					end
 
-					-- Disable for LaTeX files (filetype: 'tex')
 					if file_type == "tex" then
-						vim.notify("Treesitter disabled for LaTeX file (filetype: 'tex').", vim.log.levels.WARN)
 						return true
 					end
 
@@ -83,10 +75,26 @@ return {
 			},
 		})
 
-		-- Set keymaps for enabling/disabling Treesitter highlight
-		local keymap = vim.keymap -- for conciseness
+		-- Warn when treesitter is disabled for a buffer
+		vim.api.nvim_create_autocmd("BufReadPost", {
+			callback = function(args)
+				local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(args.buf))
+				if ok and stats and stats.size > 256 * 1024 then
+					vim.notify(
+						"Treesitter disabled due to large file size (" .. stats.size .. " bytes).",
+						vim.log.levels.WARN
+					)
+					return
+				end
+				local file_type = vim.api.nvim_buf_get_option(args.buf, "filetype")
+				if file_type == "tex" then
+					vim.notify("Treesitter disabled for LaTeX file (filetype: 'tex').", vim.log.levels.WARN)
+				end
+			end,
+		})
 
-		keymap.set("n", "<leader>td", "<cmd>TSDisable highlight<cr>", { desc = "Disable Treesitter highlighting" })
-		keymap.set("n", "<leader>te", "<cmd>TSEnable highlight<cr>", { desc = "Enable Treesitter highlighting" })
+		-- Set keymaps for enabling/disabling Treesitter highlight
+		vim.keymap.set("n", "<leader>td", "<cmd>TSDisable highlight<cr>", { desc = "Disable Treesitter highlighting" })
+		vim.keymap.set("n", "<leader>te", "<cmd>TSEnable highlight<cr>", { desc = "Enable Treesitter highlighting" })
 	end,
 }
