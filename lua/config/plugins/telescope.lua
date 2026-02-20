@@ -60,6 +60,7 @@ return {
 			defaults = {
 				vimgrep_arguments = vimgrep_args_all, -- Default: search all files
 				sorting_strategy = "ascending", -- Ensures results are listed top-to-bottom
+				selection_strategy = "follow", -- Keep cursor on same entry when results update
 				path_display = { "smart" },
 				mappings = {
 					i = {
@@ -73,6 +74,10 @@ return {
 			pickers = {
 				find_files = {
 					find_command = find_command_all, -- Default: find all files
+					debounce = 100, -- Smoother typing in large codebases
+				},
+				live_grep = {
+					debounce = 100, -- Smoother typing in large codebases
 				},
 			},
 		})
@@ -92,6 +97,10 @@ return {
 					pickers = {
 						find_files = {
 							find_command = find_command_restricted,
+							debounce = 100,
+						},
+						live_grep = {
+							debounce = 100,
 						},
 					},
 				})
@@ -104,6 +113,10 @@ return {
 					pickers = {
 						find_files = {
 							find_command = find_command_all,
+							debounce = 100,
+						},
+						live_grep = {
+							debounce = 100,
 						},
 					},
 				})
