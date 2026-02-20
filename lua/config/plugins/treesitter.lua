@@ -61,6 +61,7 @@ return {
 				"vimdoc",
 				"c",
 				"c_sharp",
+				"python",
 			},
 
 			-- incremental selection keymaps
