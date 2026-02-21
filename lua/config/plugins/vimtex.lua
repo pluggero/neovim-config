@@ -1,9 +1,8 @@
 return {
 	"lervag/vimtex",
+	version = "v2.16",
 	-- we don't want to lazy load VimTeX
 	lazy = false,
-	-- uncomment to pin to a specific release
-	-- tag = "v2.15",
 	config = function()
 		-- VimTeX configuration goes here
 		vim.g.vimtex_view_method = "zathura"

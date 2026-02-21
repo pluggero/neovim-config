@@ -1,5 +1,6 @@
 return {
 	"folke/trouble.nvim",
+	version = "v3.7.0",
 	dependencies = { "nvim-tree/nvim-web-devicons", "folke/todo-comments.nvim" },
 	opts = {
 		focus = true,
