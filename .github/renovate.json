@@ -6,12 +6,16 @@
   "automergeType": "pr",
   "packageRules": [
     {
-      "matchManagers": ["github-actions"],
+      "matchManagers": [
+        "github-actions"
+      ],
       "automerge": true,
       "automergeType": "pr"
     },
     {
-      "matchManagers": ["custom.regex"],
+      "matchManagers": [
+        "custom.regex"
+      ],
       "automerge": false
     }
   ],
@@ -26,7 +30,9 @@
     {
       "customType": "regex",
       "description": "nvim-telescope/telescope.nvim",
-      "fileMatch": ["^lua/config/plugins/telescope\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/telescope\\.lua$/"
+      ],
       "matchStrings": [
         "\"nvim-telescope/telescope\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -36,7 +42,9 @@
     {
       "customType": "regex",
       "description": "nvim-tree/nvim-tree.lua",
-      "fileMatch": ["^lua/config/plugins/nvim-tree\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/nvim-tree\\.lua$/"
+      ],
       "matchStrings": [
         "\"nvim-tree/nvim-tree\\.lua\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -47,7 +55,9 @@
     {
       "customType": "regex",
       "description": "folke/which-key.nvim",
-      "fileMatch": ["^lua/config/plugins/which-key\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/which-key\\.lua$/"
+      ],
       "matchStrings": [
         "\"folke/which-key\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -58,7 +68,9 @@
     {
       "customType": "regex",
       "description": "neovim/nvim-lspconfig",
-      "fileMatch": ["^lua/config/plugins/lsp/lspconfig\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/lsp/lspconfig\\.lua$/"
+      ],
       "matchStrings": [
         "\"neovim/nvim-lspconfig\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -69,7 +81,9 @@
     {
       "customType": "regex",
       "description": "williamboman/mason.nvim",
-      "fileMatch": ["^lua/config/plugins/lsp/mason\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/lsp/mason\\.lua$/"
+      ],
       "matchStrings": [
         "\"williamboman/mason\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -80,7 +94,9 @@
     {
       "customType": "regex",
       "description": "williamboman/mason-lspconfig.nvim",
-      "fileMatch": ["^lua/config/plugins/lsp/mason\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/lsp/mason\\.lua$/"
+      ],
       "matchStrings": [
         "\"williamboman/mason-lspconfig\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -91,7 +107,9 @@
     {
       "customType": "regex",
       "description": "hrsh7th/nvim-cmp",
-      "fileMatch": ["^lua/config/plugins/nvim-cmp\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/nvim-cmp\\.lua$/"
+      ],
       "matchStrings": [
         "\"hrsh7th/nvim-cmp\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -102,7 +120,9 @@
     {
       "customType": "regex",
       "description": "ellisonleao/gruvbox.nvim",
-      "fileMatch": ["^lua/config/plugins/colorscheme\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/colorscheme\\.lua$/"
+      ],
       "matchStrings": [
         "\"ellisonleao/gruvbox\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -112,7 +132,9 @@
     {
       "customType": "regex",
       "description": "lukas-reineke/indent-blankline.nvim",
-      "fileMatch": ["^lua/config/plugins/indent-blankline\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/indent-blankline\\.lua$/"
+      ],
       "matchStrings": [
         "\"lukas-reineke/indent-blankline\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -123,7 +145,9 @@
     {
       "customType": "regex",
       "description": "lewis6991/gitsigns.nvim",
-      "fileMatch": ["^lua/config/plugins/gitsigns\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/gitsigns\\.lua$/"
+      ],
       "matchStrings": [
         "\"lewis6991/gitsigns\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -134,7 +158,9 @@
     {
       "customType": "regex",
       "description": "windwp/nvim-autopairs",
-      "fileMatch": ["^lua/config/plugins/autopairs\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/autopairs\\.lua$/"
+      ],
       "matchStrings": [
         "\"windwp/nvim-autopairs\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -144,7 +170,9 @@
     {
       "customType": "regex",
       "description": "numToStr/Comment.nvim",
-      "fileMatch": ["^lua/config/plugins/comment\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/comment\\.lua$/"
+      ],
       "matchStrings": [
         "\"numToStr/Comment\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -155,7 +183,9 @@
     {
       "customType": "regex",
       "description": "stevearc/conform.nvim",
-      "fileMatch": ["^lua/config/plugins/conform\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/conform\\.lua$/"
+      ],
       "matchStrings": [
         "\"stevearc/conform\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -166,7 +196,9 @@
     {
       "customType": "regex",
       "description": "mfussenegger/nvim-dap",
-      "fileMatch": ["^lua/config/plugins/nvim-dap\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/nvim-dap\\.lua$/"
+      ],
       "matchStrings": [
         "\"mfussenegger/nvim-dap\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -176,7 +208,9 @@
     {
       "customType": "regex",
       "description": "stevearc/dressing.nvim",
-      "fileMatch": ["^lua/config/plugins/dressing\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/dressing\\.lua$/"
+      ],
       "matchStrings": [
         "\"stevearc/dressing\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -187,7 +221,9 @@
     {
       "customType": "regex",
       "description": "gbprod/substitute.nvim",
-      "fileMatch": ["^lua/config/plugins/substitute\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/substitute\\.lua$/"
+      ],
       "matchStrings": [
         "\"gbprod/substitute\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -198,7 +234,9 @@
     {
       "customType": "regex",
       "description": "folke/todo-comments.nvim",
-      "fileMatch": ["^lua/config/plugins/todo-comments\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/todo-comments\\.lua$/"
+      ],
       "matchStrings": [
         "\"folke/todo-comments\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -209,7 +247,9 @@
     {
       "customType": "regex",
       "description": "folke/trouble.nvim",
-      "fileMatch": ["^lua/config/plugins/trouble\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/trouble\\.lua$/"
+      ],
       "matchStrings": [
         "\"folke/trouble\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
@@ -220,7 +260,9 @@
     {
       "customType": "regex",
       "description": "lervag/vimtex",
-      "fileMatch": ["^lua/config/plugins/vimtex\\.lua$"],
+      "managerFilePatterns": [
+        "/^lua/config/plugins/vimtex\\.lua$/"
+      ],
       "matchStrings": [
         "\"lervag/vimtex\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
