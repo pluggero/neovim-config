@@ -50,7 +50,7 @@
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "nvim-tree/nvim-tree.lua",
-      "extractVersionTemplate": "^nvim-tree-v(?<version>.*)$"
+      "extractVersionTemplate": "^nvim-tree-(?<version>.*)$"
     },
     {
       "customType": "regex",
@@ -62,8 +62,7 @@
         "\"folke/which-key\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "folke/which-key.nvim",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "depNameTemplate": "folke/which-key.nvim"
     },
     {
       "customType": "regex",
@@ -75,8 +74,7 @@
         "\"neovim/nvim-lspconfig\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "neovim/nvim-lspconfig",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "depNameTemplate": "neovim/nvim-lspconfig"
     },
     {
       "customType": "regex",
@@ -85,7 +83,7 @@
         "/^lua/config/plugins/lsp/mason\\.lua$/"
       ],
       "matchStrings": [
-        "\"williamboman/mason\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+        "\"williamboman/mason\\.nvim\",?\\s*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "williamboman/mason.nvim",
@@ -114,8 +112,7 @@
         "\"hrsh7th/nvim-cmp\",?\\s*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "hrsh7th/nvim-cmp",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "depNameTemplate": "hrsh7th/nvim-cmp"
     },
     {
       "customType": "regex",
@@ -127,8 +124,7 @@
         "\"L3MON4D3/LuaSnip\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "L3MON4D3/LuaSnip",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "depNameTemplate": "L3MON4D3/LuaSnip"
     },
     {
       "customType": "regex",
@@ -165,8 +161,7 @@
         "\"lukas-reineke/indent-blankline\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "lukas-reineke/indent-blankline.nvim",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "depNameTemplate": "lukas-reineke/indent-blankline.nvim"
     },
     {
       "customType": "regex",
@@ -178,8 +173,7 @@
         "\"lewis6991/gitsigns\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "lewis6991/gitsigns.nvim",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "depNameTemplate": "lewis6991/gitsigns.nvim"
     },
     {
       "customType": "regex",
@@ -203,8 +197,7 @@
         "\"numToStr/Comment\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "numToStr/Comment.nvim",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "depNameTemplate": "numToStr/Comment.nvim"
     },
     {
       "customType": "regex",
@@ -216,8 +209,7 @@
         "\"stevearc/conform\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "stevearc/conform.nvim",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "depNameTemplate": "stevearc/conform.nvim"
     },
     {
       "customType": "regex",
@@ -241,8 +233,7 @@
         "\"stevearc/dressing\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "stevearc/dressing.nvim",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "depNameTemplate": "stevearc/dressing.nvim"
     },
     {
       "customType": "regex",
@@ -254,8 +245,7 @@
         "\"gbprod/substitute\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "gbprod/substitute.nvim",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "depNameTemplate": "gbprod/substitute.nvim"
     },
     {
       "customType": "regex",
@@ -267,8 +257,7 @@
         "\"folke/todo-comments\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "folke/todo-comments.nvim",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "depNameTemplate": "folke/todo-comments.nvim"
     },
     {
       "customType": "regex",
@@ -280,8 +269,7 @@
         "\"folke/trouble\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "folke/trouble.nvim",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "depNameTemplate": "folke/trouble.nvim"
     },
     {
       "customType": "regex",
@@ -293,8 +281,7 @@
         "\"lervag/vimtex\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "lervag/vimtex",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "depNameTemplate": "lervag/vimtex"
     }
   ]
 }
