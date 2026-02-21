@@ -111,7 +111,7 @@
         "/^lua/config/plugins/nvim-cmp\\.lua$/"
       ],
       "matchStrings": [
-        "\"hrsh7th/nvim-cmp\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+        "\"hrsh7th/nvim-cmp\",?\\s*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "hrsh7th/nvim-cmp",
