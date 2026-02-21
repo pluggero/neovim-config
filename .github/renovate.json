@@ -141,18 +141,6 @@
     },
     {
       "customType": "regex",
-      "description": "ellisonleao/gruvbox.nvim",
-      "managerFilePatterns": [
-        "/^lua/config/plugins/colorscheme\\.lua$/"
-      ],
-      "matchStrings": [
-        "\"ellisonleao/gruvbox\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
-      ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "ellisonleao/gruvbox.nvim"
-    },
-    {
-      "customType": "regex",
       "description": "lukas-reineke/indent-blankline.nvim",
       "managerFilePatterns": [
         "/^lua/config/plugins/indent-blankline\\.lua$/"
