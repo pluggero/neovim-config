@@ -1,0 +1,232 @@
+{
+  "extends": [
+    "config:best-practices",
+    ":disableRateLimiting"
+  ],
+  "automergeType": "pr",
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "matchManagers": ["custom.regex"],
+      "automerge": false
+    }
+  ],
+  "enabledManagers": [
+    "github-actions",
+    "custom.regex"
+  ],
+  "assignees": [
+    "pluggero"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "nvim-telescope/telescope.nvim",
+      "fileMatch": ["^lua/config/plugins/telescope\\.lua$"],
+      "matchStrings": [
+        "\"nvim-telescope/telescope\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "nvim-telescope/telescope.nvim"
+    },
+    {
+      "customType": "regex",
+      "description": "nvim-tree/nvim-tree.lua",
+      "fileMatch": ["^lua/config/plugins/nvim-tree\\.lua$"],
+      "matchStrings": [
+        "\"nvim-tree/nvim-tree\\.lua\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "nvim-tree/nvim-tree.lua",
+      "extractVersionTemplate": "^nvim-tree-v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "folke/which-key.nvim",
+      "fileMatch": ["^lua/config/plugins/which-key\\.lua$"],
+      "matchStrings": [
+        "\"folke/which-key\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "folke/which-key.nvim",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "neovim/nvim-lspconfig",
+      "fileMatch": ["^lua/config/plugins/lsp/lspconfig\\.lua$"],
+      "matchStrings": [
+        "\"neovim/nvim-lspconfig\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "neovim/nvim-lspconfig",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "williamboman/mason.nvim",
+      "fileMatch": ["^lua/config/plugins/lsp/mason\\.lua$"],
+      "matchStrings": [
+        "\"williamboman/mason\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "williamboman/mason.nvim",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "williamboman/mason-lspconfig.nvim",
+      "fileMatch": ["^lua/config/plugins/lsp/mason\\.lua$"],
+      "matchStrings": [
+        "\"williamboman/mason-lspconfig\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "williamboman/mason-lspconfig.nvim",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "hrsh7th/nvim-cmp",
+      "fileMatch": ["^lua/config/plugins/nvim-cmp\\.lua$"],
+      "matchStrings": [
+        "\"hrsh7th/nvim-cmp\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "hrsh7th/nvim-cmp",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "ellisonleao/gruvbox.nvim",
+      "fileMatch": ["^lua/config/plugins/colorscheme\\.lua$"],
+      "matchStrings": [
+        "\"ellisonleao/gruvbox\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "ellisonleao/gruvbox.nvim"
+    },
+    {
+      "customType": "regex",
+      "description": "lukas-reineke/indent-blankline.nvim",
+      "fileMatch": ["^lua/config/plugins/indent-blankline\\.lua$"],
+      "matchStrings": [
+        "\"lukas-reineke/indent-blankline\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "lukas-reineke/indent-blankline.nvim",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "lewis6991/gitsigns.nvim",
+      "fileMatch": ["^lua/config/plugins/gitsigns\\.lua$"],
+      "matchStrings": [
+        "\"lewis6991/gitsigns\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "lewis6991/gitsigns.nvim",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "windwp/nvim-autopairs",
+      "fileMatch": ["^lua/config/plugins/autopairs\\.lua$"],
+      "matchStrings": [
+        "\"windwp/nvim-autopairs\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "windwp/nvim-autopairs"
+    },
+    {
+      "customType": "regex",
+      "description": "numToStr/Comment.nvim",
+      "fileMatch": ["^lua/config/plugins/comment\\.lua$"],
+      "matchStrings": [
+        "\"numToStr/Comment\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "numToStr/Comment.nvim",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "stevearc/conform.nvim",
+      "fileMatch": ["^lua/config/plugins/conform\\.lua$"],
+      "matchStrings": [
+        "\"stevearc/conform\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "stevearc/conform.nvim",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "mfussenegger/nvim-dap",
+      "fileMatch": ["^lua/config/plugins/nvim-dap\\.lua$"],
+      "matchStrings": [
+        "\"mfussenegger/nvim-dap\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "mfussenegger/nvim-dap"
+    },
+    {
+      "customType": "regex",
+      "description": "stevearc/dressing.nvim",
+      "fileMatch": ["^lua/config/plugins/dressing\\.lua$"],
+      "matchStrings": [
+        "\"stevearc/dressing\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "stevearc/dressing.nvim",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "gbprod/substitute.nvim",
+      "fileMatch": ["^lua/config/plugins/substitute\\.lua$"],
+      "matchStrings": [
+        "\"gbprod/substitute\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "gbprod/substitute.nvim",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "folke/todo-comments.nvim",
+      "fileMatch": ["^lua/config/plugins/todo-comments\\.lua$"],
+      "matchStrings": [
+        "\"folke/todo-comments\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "folke/todo-comments.nvim",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "folke/trouble.nvim",
+      "fileMatch": ["^lua/config/plugins/trouble\\.lua$"],
+      "matchStrings": [
+        "\"folke/trouble\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "folke/trouble.nvim",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "lervag/vimtex",
+      "fileMatch": ["^lua/config/plugins/vimtex\\.lua$"],
+      "matchStrings": [
+        "\"lervag/vimtex\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "lervag/vimtex",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    }
+  ]
+}

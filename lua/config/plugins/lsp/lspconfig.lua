@@ -1,5 +1,6 @@
 return {
 	"neovim/nvim-lspconfig",
+	version = "v2.5.0",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
