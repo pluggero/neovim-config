@@ -119,6 +119,32 @@
     },
     {
       "customType": "regex",
+      "description": "L3MON4D3/LuaSnip",
+      "managerFilePatterns": [
+        "/^lua/config/plugins/nvim-cmp\\.lua$/"
+      ],
+      "matchStrings": [
+        "\"L3MON4D3/LuaSnip\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "L3MON4D3/LuaSnip",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "akinsho/bufferline.nvim",
+      "managerFilePatterns": [
+        "/^lua/config/plugins/bufferline\\.lua$/"
+      ],
+      "matchStrings": [
+        "\"akinsho/bufferline\\.nvim\"[^}]*version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "akinsho/bufferline.nvim",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
       "description": "ellisonleao/gruvbox.nvim",
       "managerFilePatterns": [
         "/^lua/config/plugins/colorscheme\\.lua$/"
