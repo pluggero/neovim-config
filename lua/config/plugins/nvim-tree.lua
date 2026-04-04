@@ -44,6 +44,49 @@ return {
 			git = {
 				ignore = false,
 			},
+			-- Custom keybindings: swap d and D behavior
+			on_attach = function(bufnr)
+				local api = require("nvim-tree.api")
+
+				local function opts(desc)
+					return {
+						desc = "nvim-tree: " .. desc,
+						buffer = bufnr,
+						noremap = true,
+						silent = true,
+						nowait = true,
+					}
+				end
+
+				-- Load all default mappings first
+				api.config.mappings.default_on_attach(bufnr)
+
+				-- Custom trash function with confirmation
+				local function trash_with_confirm()
+					local node = api.tree.get_node_under_cursor()
+					local confirm_msg = string.format("Trash %s? [y/n] ", node.name)
+					vim.ui.input({ prompt = confirm_msg }, function(input)
+						if input and input:lower() == "y" then
+							api.fs.trash(node)
+						end
+					end)
+				end
+
+				-- Custom delete function with confirmation
+				local function delete_with_confirm()
+					local node = api.tree.get_node_under_cursor()
+					local confirm_msg = string.format("Delete %s? [y/n] ", node.name)
+					vim.ui.input({ prompt = confirm_msg }, function(input)
+						if input and input:lower() == "y" then
+							api.fs.remove(node)
+						end
+					end)
+				end
+
+				-- Override d and D with swapped behavior
+				vim.keymap.set("n", "d", trash_with_confirm, opts("Trash"))
+				vim.keymap.set("n", "D", delete_with_confirm, opts("Delete Permanently"))
+			end,
 		})
 
 		-- set keymaps
