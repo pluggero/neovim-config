@@ -44,7 +44,7 @@ return {
 			git = {
 				ignore = false,
 			},
-			-- Custom keybindings: swap d and D behavior
+			-- Custom keybindings: smart operations with marking support
 			on_attach = function(bufnr)
 				local api = require("nvim-tree.api")
 
@@ -61,31 +61,71 @@ return {
 				-- Load all default mappings first
 				api.config.mappings.default_on_attach(bufnr)
 
-				-- Custom trash function with confirmation
-				local function trash_with_confirm()
-					local node = api.tree.get_node_under_cursor()
-					local confirm_msg = string.format("Trash %s? [y/n] ", node.name)
-					vim.ui.input({ prompt = confirm_msg }, function(input)
-						if input and input:lower() == "y" then
-							api.fs.trash(node)
-						end
-					end)
+				-- Smart trash: operates on marked files if any, otherwise current file
+				local function smart_trash()
+					local marks = api.marks.list()
+					if #marks == 0 then
+						-- No marks: operate on current file (nvim-tree handles confirmation)
+						api.fs.trash()
+					else
+						-- Marks exist: use bulk operation (nvim-tree handles confirmation)
+						api.marks.bulk.trash()
+					end
 				end
 
-				-- Custom delete function with confirmation
-				local function delete_with_confirm()
-					local node = api.tree.get_node_under_cursor()
-					local confirm_msg = string.format("Delete %s? [y/n] ", node.name)
-					vim.ui.input({ prompt = confirm_msg }, function(input)
-						if input and input:lower() == "y" then
-							api.fs.remove(node)
-						end
-					end)
+				-- Smart delete: operates on marked files if any, otherwise current file
+				local function smart_delete()
+					local marks = api.marks.list()
+					if #marks == 0 then
+						-- No marks: operate on current file (nvim-tree handles confirmation)
+						api.fs.remove()
+					else
+						-- Marks exist: use bulk operation (nvim-tree handles confirmation)
+						api.marks.bulk.delete()
+					end
 				end
 
-				-- Override d and D with swapped behavior
-				vim.keymap.set("n", "d", trash_with_confirm, opts("Trash"))
-				vim.keymap.set("n", "D", delete_with_confirm, opts("Delete Permanently"))
+				-- Smart cut: operates on marked files if any, otherwise current file
+				local function smart_cut()
+					local marks = api.marks.list()
+					if #marks == 0 then
+						api.fs.cut()
+					else
+						for _, marked_node in ipairs(marks) do
+							api.fs.cut(marked_node)
+						end
+						api.marks.clear()
+					end
+				end
+
+				-- Smart copy: operates on marked files if any, otherwise current file
+				local function smart_copy()
+					local marks = api.marks.list()
+					if #marks == 0 then
+						api.fs.copy.node()
+					else
+						for _, marked_node in ipairs(marks) do
+							api.fs.copy.node(marked_node)
+						end
+						api.marks.clear()
+					end
+				end
+
+				-- Mark and move down
+				local function mark_and_move_down()
+					api.marks.toggle()
+					vim.cmd("norm j")
+				end
+
+				-- Keybindings
+				vim.keymap.set("n", "m", mark_and_move_down, opts("Toggle Mark and Move Down"))
+				vim.keymap.set("n", "d", smart_trash, opts("Trash (marked or current)"))
+				vim.keymap.set("n", "D", smart_delete, opts("Delete (marked or current)"))
+				vim.keymap.set("n", "x", smart_cut, opts("Cut (marked or current)"))
+				vim.keymap.set("n", "y", smart_copy, opts("Copy (marked or current)"))
+
+				-- Remove default 'c' keybind for cut (only use 'x')
+				vim.keymap.del("n", "c", { buffer = bufnr })
 			end,
 		})
 
