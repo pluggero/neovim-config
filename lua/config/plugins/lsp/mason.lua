@@ -1,6 +1,6 @@
 return {
 	"williamboman/mason.nvim",
-	version = "2.2.1",
+	version = "2.3.1",
 	dependencies = {
 		{ "williamboman/mason-lspconfig.nvim", version = "2.2.0" },
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
