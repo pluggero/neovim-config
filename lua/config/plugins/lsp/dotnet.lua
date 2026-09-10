@@ -1,15 +1,13 @@
--- LSP Source: https://github.com/seblj/roslyn.nvim
+-- LSP Source: https://github.com/seblyng/roslyn.nvim
 -- File: lua/config/lsp/roslyn.lua
--- This sets up the roslyn.nvim and rzls.nvim plugin, along with the common LSP on_attach & capabilities
+-- This sets up the roslyn.nvim plugin, along with the common LSP on_attach & capabilities.
+-- Handles both C# and Razor/CSHTML (via co-hosting, built into roslyn-language-server) files.
 --
--- !To then install the packages to :MasonInstall roslyn & :MasonInstall rzls
+-- !To then install the package: :MasonInstall roslyn-language-server
 -- This will only work once the lsp is beeing laoded (open a cs and razor file)
 -- Or temporarily remove the `ft = {"cs", "razor"}` part of the config to install it
 return {
-	"seblj/roslyn.nvim",
-	dependencies = {
-		"tris203/rzls.nvim",
-	},
+	"seblyng/roslyn.nvim",
 	event = { "BufReadPre", "BufNewFile" },
 	-- Only load when editing C# and Razor files:
 	ft = { "cs", "razor" },
@@ -49,64 +47,18 @@ return {
 	-- or a `config` function. We'll show a `config` function
 	config = function()
 		local roslyn = require("roslyn")
-		local rzls = require("rzls")
 
 		-- Import existing on_attach and capabilities
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local capabilities = cmp_nvim_lsp.default_capabilities()
 		local lsp_utils = require("config.utils.lsp_utils")
 
-		-- Configure rzls using vim.lsp.config
-		vim.lsp.config("rzls", {
-			on_attach = lsp_utils.on_attach,
-			capabilities = capabilities,
-		})
-
-		-- Setup rzls plugin (plugin-specific config)
-		rzls.setup({})
-
 		-- Configure roslyn LSP client using vim.lsp.config
+		-- `cmd` is left to roslyn.nvim's own auto-discovery: it finds the
+		-- `roslyn-language-server` bin shim installed by Mason automatically.
 		vim.lsp.config("roslyn", {
-			cmd = {
-				-- We need to make sure that the exe path lead to the `Microsoft.CodeAnalysis.LanguageServer.dll`.
-				-- We can check if it's either stored under `~/.local/share/nvimmason/packages/roslyn/libexec` or `~/.local/share/nvim/roslyn`
-				-- And obviously we need to make sure that the dotnet sdk is installed.
-				-- If we installed via Mason custom registry (which we do in the mason.lua by adding the `crashdummyy/mason-registry`), these are the default paths:
-				"dotnet",
-				vim.fs.joinpath(
-					vim.fn.stdpath("data"),
-					"mason",
-					"packages",
-					"roslyn",
-					"libexec",
-					"Microsoft.CodeAnalysis.LanguageServer.dll"
-				),
-				-- Additional arguments
-				"--stdio",
-				"--logLevel=Information",
-				"--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.log.get_filename()),
-				"--razorSourceGenerator=" .. vim.fs.joinpath(
-					vim.fn.stdpath("data"),
-					"mason",
-					"packages",
-					"roslyn",
-					"libexec",
-					"Microsoft.CodeAnalysis.Razor.Compiler.dll"
-				),
-				"--razorDesignTimePath=" .. vim.fs.joinpath(
-					vim.fn.stdpath("data"),
-					"mason",
-					"packages",
-					"rzls",
-					"libexec",
-					"Targets",
-					"Microsoft.NET.Sdk.Razor.DesignTime.targets"
-				),
-			},
 			on_attach = lsp_utils.on_attach,
 			capabilities = capabilities,
-			-- Add rzls handlers to make the packages work with each other
-			handlers = require("rzls.roslyn_handlers"),
 			-- `settings` for Roslyn-specific functionality:
 			settings = {
 				["csharp|inlay_hints"] = {
