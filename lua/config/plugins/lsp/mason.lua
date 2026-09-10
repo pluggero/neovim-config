@@ -16,14 +16,8 @@ return {
 
 		-- enable mason and configure icons
 		mason.setup({
-			-- Registries that should be used.
 			registries = {
 				"github:mason-org/mason-registry",
-				-- Adds a custom registry containing the roslyn and rzls packages.
-				-- These packages are currently not included in the mason registry itself.
-				-- Source: https://github.com/seblj/roslyn.nvim / https://github.com/tris203/rzls.nvim
-				-- TODO: As soon as the packages beeing added to the mason registry we can remove this.
-				"github:crashdummyy/mason-registry",
 			},
 
 			ui = {
@@ -67,8 +61,7 @@ return {
 				"pylint",
 				"eslint_d",
 				"debugpy", -- python debugger
-				"roslyn",
-				"rzls",
+				"roslyn-language-server", -- C# / Razor language server (roslyn.nvim)
 				"netcoredbg", -- C# debugger
 				"ansible-lint",
 				"tflint", -- terraform linter
