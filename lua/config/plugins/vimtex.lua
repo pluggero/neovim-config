@@ -1,6 +1,6 @@
 return {
 	"lervag/vimtex",
-	version = "2.17",
+	version = "2.18",
 	-- we don't want to lazy load VimTeX
 	lazy = false,
 	config = function()
