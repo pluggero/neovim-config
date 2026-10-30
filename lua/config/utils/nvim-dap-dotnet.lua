@@ -161,6 +161,24 @@ function M.build_dll_path()
 	return dll_path
 end
 
+--- Resolve the .NET project name for the current buffer (or a given path), without requiring a build output
+--- @param start_path string|nil Directory to start searching from (defaults to current buffer's directory)
+--- @return string|nil Project name, or nil if no .csproj could be found
+function M.resolve_project_name(start_path)
+	start_path = start_path or vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":p:h")
+	local project_root = M.find_project_root_by_csproj(start_path)
+	if not project_root then
+		return nil
+	end
+
+	local csproj_files = find_csproj_files(project_root)
+	if #csproj_files == 0 then
+		return nil
+	end
+
+	return get_project_name(csproj_files[1])
+end
+
 -- =======================
 -- UI HELPER FUNCTIONS
 -- =======================
